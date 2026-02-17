@@ -1,0 +1,46 @@
+public class MainActivity extends AppCompatActivity {
+    ImageView img;
+    Button b1;
+    MediaPlayer m1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button b1 = (Button) findViewById(R.id.button);
+        ImageView img = (ImageView) findViewById(R.id.imageView);
+        m1 = MediaPlayer.create(MainActivity.this, R.raw.aud);
+ 
+Multithreading to play audio and swap images
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        img.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                AnimationDrawable a=new AnimationDrawable();
+                                a.addFrame(getResources().getDrawable(R.drawable.harrypotter),500);
+                                a.addFrame(getResources().getDrawable(R.drawable.tangled),500);
+                                a.addFrame(getResources().getDrawable(R.drawable.oggy),500);
+                                a.addFrame(getResources().getDrawable(R.drawable.strangerthings),500);
+                                a.addFrame(getResources().getDrawable(R.drawable.froze),500);
+                                a.setOneShot(false);
+                                img.setBackgroundDrawable(a);
+                                a.start();
+                            }
+                        });
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        img.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                m1.start();
+                            }
+                        });
+                    }
+                })start();  }    });    }}
