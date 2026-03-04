@@ -1,0 +1,62 @@
+package com.example.ex9;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText et1;
+    Button btnAdd;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        et1 = findViewById(R.id.editTextText2);
+        btnAdd = findViewById(R.id.button2);
+
+        btnAdd.setOnClickListener(v -> {
+
+            String num1 = et1.getText().toString();
+
+            if (!num1.isEmpty()) {
+
+                int a = Integer.parseInt(num1);
+
+                StringBuilder result = new StringBuilder();
+
+                for (int i = 1; i <= 10; i++) {
+                    result.append(a)
+                            .append(" * ")
+                            .append(i)
+                            .append(" = ")
+                            .append(a * i)
+                            .append("\n");
+                }
+
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(MainActivity.this);
+
+                builder.setTitle("Multiplication Result");
+                builder.setMessage(result.toString());   // ✅ Only one setMessage
+                builder.setPositiveButton("OK", null);
+                builder.show();
+
+            } else {
+
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(MainActivity.this);
+
+                builder.setTitle("Error");
+                builder.setMessage("Please enter a number");
+                builder.setPositiveButton("OK", null);
+                builder.show();
+            }
+        });
+    }
+}
